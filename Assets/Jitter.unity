@@ -448,11 +448,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1800e79fd029844f4855c0c468782250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectXform: {fileID: 1444736390}
-  jitterAmount: 0.3
-  jitterWait: 0.5
-  jitterInterval: 0.5
-  accTexture: {fileID: 8600000, guid: 4cc0c3ca0415d4b0588eb89feb4a3056, type: 2}
+  _objectXform: {fileID: 1444736390}
+  _jitterAmount: 0.3
+  _jitterWait: 0.5
+  _jitterInterval: 0.5
+  _accTexture: {fileID: 8600000, guid: 4cc0c3ca0415d4b0588eb89feb4a3056, type: 2}
+  _indexOffset: 23
 --- !u!4 &908024396
 Transform:
   m_ObjectHideFlags: 0

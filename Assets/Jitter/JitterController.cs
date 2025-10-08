@@ -17,37 +17,40 @@ public sealed class JitterMovement : MonoBehaviour
         return result;
     }
 
-    [SerializeField] Transform objectXform = null;
-    [SerializeField] float jitterAmount = 0.3f;
-    [SerializeField] float jitterWait = 0.5f;
-    [SerializeField] float jitterInterval = 1;
-    [SerializeField] CustomRenderTexture accTexture = null;
+    [SerializeField] Transform _objectXform = null;
+    [SerializeField] float _jitterAmount = 0.3f;
+    [SerializeField] float _jitterWait = 0.5f;
+    [SerializeField] float _jitterInterval = 0.5f;
+    [SerializeField] CustomRenderTexture _accTexture = null;
+    [SerializeField] int _indexOffset = 0;
 
     async Awaitable Start()
     {
-        accTexture.Initialize();
-        accTexture.Update();
+        _accTexture.Initialize();
+        _accTexture.Update();
 
-        for (var i = 0;; i++)
+        for (var i = 0; i < 21; i++)
         {
-            await Awaitable.WaitForSecondsAsync(jitterWait);
+            await Awaitable.WaitForSecondsAsync(_jitterWait);
 
-            var x = (Halton(i, 2) - 0.5f) * jitterAmount;
-            var y = (Halton(i, 3) - 0.5f) * jitterAmount;
+            var x = (Halton(i + _indexOffset, 2) - 0.5f) * _jitterAmount;
+            var y = (Halton(i + _indexOffset, 3) - 0.5f) * _jitterAmount;
 
-            var p0 = objectXform.localPosition;
+            if (i == 20) (x, y) = (0, 0); // return to center
+
+            var p0 = _objectXform.localPosition;
             var p1 = new float3(x, y, 0);
 
-            for (var t = 0f; t < 1f; t += Time.deltaTime / jitterInterval)
+            for (var t = 0f; t < 1f; t += Time.deltaTime / _jitterInterval)
             {
-                objectXform.localPosition = math.lerp(p0, p1, math.smoothstep(0, 1, t));
+                _objectXform.localPosition = math.lerp(p0, p1, math.smoothstep(0, 1, t));
                 await Awaitable.NextFrameAsync();
             }
 
-            objectXform.localPosition = p1;
+            _objectXform.localPosition = p1;
             await Awaitable.NextFrameAsync();
 
-            accTexture.Update();
+            _accTexture.Update();
         }
     }
 }
