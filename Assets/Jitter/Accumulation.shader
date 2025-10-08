@@ -18,9 +18,9 @@ float _BlendRatio;
 float4 FragmentUpdate(CustomRenderTextureVaryings i) : SV_Target
 {
     float2 uv = i.globalTexcoord.xy;
-    float3 c0 = SAMPLE_TEXTURE2D(_SelfTexture2D, sampler_SelfTexture2D, uv).rgb;
-    float3 c1 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv).rgb;
-    return float4(lerp(c0, c1, _BlendRatio), 1);
+    float c0 = SAMPLE_TEXTURE2D(_SelfTexture2D, sampler_SelfTexture2D, uv).r;
+    float c1 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, uv).r;
+    return float4(lerp(c0, c1, _BlendRatio), c1.r, 0, 1);
 }
 
     ENDHLSL
