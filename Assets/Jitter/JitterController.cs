@@ -29,14 +29,14 @@ public sealed class JitterMovement : MonoBehaviour
         _accTexture.Initialize();
         _accTexture.Update();
 
-        for (var i = 0; i < 21; i++)
+        for (var i = 0; i <= 6; i++)
         {
             await Awaitable.WaitForSecondsAsync(_jitterWait);
 
             var x = (Halton(i + _indexOffset, 2) - 0.5f) * _jitterAmount;
             var y = (Halton(i + _indexOffset, 3) - 0.5f) * _jitterAmount;
 
-            if (i == 20) (x, y) = (0, 0); // return to center
+            if (i == 6) (x, y) = (0, 0); // return to center
 
             var p0 = _objectXform.localPosition;
             var p1 = new float3(x, y, 0);
