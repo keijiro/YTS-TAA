@@ -54,7 +54,7 @@ ScriptedImporter:
   _disc:
     Radius: 1
     Angle: 1
-    Segments: 32
+    Segments: 64
     Axis: 2
     DoubleSided: 0
   _teapot:
