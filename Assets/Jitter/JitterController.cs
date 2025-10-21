@@ -3,20 +3,6 @@ using Unity.Mathematics;
 
 public sealed class JitterMovement : MonoBehaviour
 {
-    static float Halton(int index, int baseValue)
-    {
-        var result = 0f;
-        var f = 1f / baseValue;
-        var i = index;
-        while (i > 0)
-        {
-            result += f * (i % baseValue);
-            i /= baseValue;
-            f /= baseValue;
-        }
-        return result;
-    }
-
     [SerializeField] Transform _objectXform = null;
     [SerializeField] Renderer _accView = null;
     [SerializeField] float _jitterAmount = 0.3f;
@@ -42,8 +28,8 @@ public sealed class JitterMovement : MonoBehaviour
 
             await Awaitable.WaitForSecondsAsync(_jitterWait * 0.5f);
 
-            var x = (Halton(i + _indexOffset, 2) - 0.5f) * _jitterAmount;
-            var y = (Halton(i + _indexOffset, 3) - 0.5f) * _jitterAmount;
+            var x = (Jitter.Halton(i + _indexOffset, 2) - 0.5f) * _jitterAmount;
+            var y = (Jitter.Halton(i + _indexOffset, 3) - 0.5f) * _jitterAmount;
 
             if (i >= 6) (x, y) = (0, 0); // return to center
 
